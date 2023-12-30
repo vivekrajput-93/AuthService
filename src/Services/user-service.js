@@ -21,6 +21,25 @@ class UserService {
     }
 
 
+    async signIn(email, plainPassword) {
+        try {
+            const user = await this.userRepository.getByEmail(email);
+            const passwordMatch =  this.checkPassword(plainPassword, user.password);
+            if(!passwordMatch) {
+                console.log("password doesn't match")
+                throw {error : "Incorrect Paasword"}
+            }
+
+
+            const newJwt = this.createToken({email : user.email, id:user.id});
+            return newJwt;
+        } catch (error) {
+            console.log("somethin went wrong with service layer");
+            throw error
+        }
+    }
+
+
     async destroy(userId) {
         try {
             await this.userRepository.destroy({
