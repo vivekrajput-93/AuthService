@@ -8,6 +8,8 @@ const UserController = require("../../Controllers/user-controller")
 
 router.post("/signup", AuthValidator.validateAuth, UserController.create);
 
-router.post("/signin", AuthValidator.validateAuth,  UserController.signIn)
+router.post("/signin", AuthValidator.validateAuth,  UserController.signIn);
+
+router.get("/isAuthenticated", UserController.isAuthenticated);
 
 module.exports = router;
